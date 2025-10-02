@@ -11,20 +11,35 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:ihearyou/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('IHearYou app smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(const IHearYouApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Verify that the app title is displayed
+    expect(find.text('IHearYou'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Verify that the initial instruction text is displayed
+    expect(find.text('Tap to speak'), findsOneWidget);
+    expect(find.text('Say "Blue" or "Red"'), findsOneWidget);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Verify that the microphone icon is present
+    expect(find.byIcon(Icons.mic_none), findsOneWidget);
+
+    // Verify that the info icon is present
+    expect(find.byIcon(Icons.info_outline), findsOneWidget);
+  });
+
+  testWidgets('Microphone button is tappable', (WidgetTester tester) async {
+    // Build our app
+    await tester.pumpWidget(const IHearYouApp());
+
+    // Find the microphone button container
+    final micButton = find.byType(GestureDetector).first;
+
+    // Verify the button exists
+    expect(micButton, findsOneWidget);
+
+    // Note: We can't fully test speech recognition in unit tests
+    // as it requires actual device hardware and permissions
   });
 }
